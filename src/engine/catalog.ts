@@ -25,7 +25,7 @@ export const GRIPS_AFTER_TRANSITION = { winner: 1, loser: 0 } as const;
 export const POSITION_NAMES: Record<Position, string> = {
   standing: "Стойка",
   guard: "Закрытый гард",
-  halfGuard: "Полугард",
+  halfGuard: "Халф гард",
   sideControl: "Боковой контроль",
   mount: "Маунт",
   back: "Контроль спины"
@@ -84,11 +84,13 @@ export const TRANSITIONS: Record<TransitionId, TransitionDef> = {
   guardSweep: { id: "guardSweep", name: "Свип", short: "Свип", from: "guard", role: "bottom", cost: 2, to: "halfGuard", attackerEndsTop: true, points: 2 },
   passGuard: { id: "passGuard", name: "Пройти гард", short: "Проход", from: "halfGuard", role: "top", cost: 2, to: "sideControl", attackerEndsTop: true, points: 3 },
   halfSweep: { id: "halfSweep", name: "Свип", short: "Свип", from: "halfGuard", role: "bottom", cost: 2, to: "halfGuard", attackerEndsTop: true, points: 2 },
+  halfBackTop: { id: "halfBackTop", name: "Забрать спину", short: "Спина", from: "halfGuard", role: "top", cost: 3, to: "back", attackerEndsTop: true, points: 4 },
+  halfBackBottom: { id: "halfBackBottom", name: "Забрать спину", short: "Спина", from: "halfGuard", role: "bottom", cost: 3, to: "back", attackerEndsTop: true, points: 4 },
   recoverGuard: { id: "recoverGuard", name: "Вернуть гард", short: "Гард возвращён", from: "halfGuard", role: "bottom", cost: 1, to: "guard", attackerEndsTop: false, points: 0 },
   mountUp: { id: "mountUp", name: "Занять маунт", short: "Маунт", from: "sideControl", role: "top", cost: 2, to: "mount", attackerEndsTop: true, points: 4 },
-  recoverHalf: { id: "recoverHalf", name: "Вернуть полугард", short: "Полугард", from: "sideControl", role: "bottom", cost: 1, to: "halfGuard", attackerEndsTop: false, points: 0 },
+  recoverHalf: { id: "recoverHalf", name: "Вернуть халф гард", short: "Халф гард", from: "sideControl", role: "bottom", cost: 1, to: "halfGuard", attackerEndsTop: false, points: 0 },
   takeBack: { id: "takeBack", name: "Забрать спину", short: "Спина", from: "mount", role: "top", cost: 2, to: "back", attackerEndsTop: true, points: 4 },
-  elbowKnee: { id: "elbowKnee", name: "Локоть–колено", short: "Полугард", from: "mount", role: "bottom", cost: 1, to: "halfGuard", attackerEndsTop: false, points: 0 },
+  elbowKnee: { id: "elbowKnee", name: "Локоть–колено", short: "Халф гард", from: "mount", role: "bottom", cost: 1, to: "halfGuard", attackerEndsTop: false, points: 0 },
   slideToGuard: { id: "slideToGuard", name: "Сползти в гард", short: "Гард", from: "back", role: "bottom", cost: 2, to: "guard", attackerEndsTop: false, points: 0 }
 };
 
@@ -98,7 +100,9 @@ export const TRANSITION_ORDER: TransitionId[] = [
   "openGuard",
   "guardSweep",
   "passGuard",
+  "halfBackTop",
   "halfSweep",
+  "halfBackBottom",
   "recoverGuard",
   "mountUp",
   "recoverHalf",

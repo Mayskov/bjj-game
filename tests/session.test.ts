@@ -243,8 +243,8 @@ describe("манифест визуализации", () => {
   const sides: Side[] = ["player", "bot"];
   it("кадр есть для каждой позиции, контроля, приёма и фазы", () => {
     for (const e of VISUAL_MANIFEST) expect(() => resolveFrame({ key: { position: e.position, top: e.controller, technique: e.technique ?? undefined, attacker: e.attacker ?? undefined, phase: e.phase }, basics: [] })).not.toThrow();
-    // 1 стойка + 5×2 базовых + 12×2 попыток + 4×2×7 фаз сабмишнов
-    expect(VISUAL_MANIFEST).toHaveLength(1 + 10 + 24 + 56);
+    // 1 стойка + 5×2 базовых + 14×2 попыток + 4×2×7 фаз сабмишнов
+    expect(VISUAL_MANIFEST).toHaveLength(1 + 10 + 28 + 56);
   });
 
   it("чёрное ги (игрок) — верхний, когда игрок контролирует, и нижний — когда бот", () => {

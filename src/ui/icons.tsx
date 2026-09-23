@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-/** Простые пиктограммы действий: цвет кнопки — тип действия, иконка — само действие. */
+/** Простые пиктограммы действий: иконка — само действие. */
 const P = { fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round" } as const;
 
 const PATHS: Record<string, ReactElement> = {

@@ -168,7 +168,7 @@ function Scoreboard({ m }: { m: MatchState }) {
       <div className="score-row">
         <Resources side="player" m={m} />
         <span className="exchange" data-testid="exchange">
-          {String(m.exchange).padStart(2, "0")} / {MAX_EXCHANGES}
+          обмен {m.exchange} / {MAX_EXCHANGES}
         </span>
         <Resources side="bot" m={m} />
       </div>
@@ -187,8 +187,8 @@ export function hintFor(m: MatchState): string {
   if (m.position === "standing") return canAttack ? "Стойка — проходи в ноги или затягивай в гард" : "Набери захват, чтобы открыть техники";
   const where: Record<Exclude<MatchState["position"], "standing">, [string, string, string, string]> = {
     guard: ["Ты сверху в гарде", "раскрывай гард", "Ты снизу в гарде", "свип или треугольник"],
-    halfGuard: ["Ты сверху в полугарде", "проходи гард", "Ты снизу в полугарде", "свип или верни гард"],
-    sideControl: ["Ты в боковом контроле", "маунт или кимура", "Ты под боковым контролем", "верни полугард"],
+    halfGuard: ["Ты сверху в халф гарде", "проходи гард или забирай спину", "Ты снизу в халф гарде", "свип, спина или верни гард"],
+    sideControl: ["Ты в боковом контроле", "маунт или кимура", "Ты под боковым контролем", "верни халф гард"],
     mount: ["Ты в маунте", "спина или рычаг локтя", "Ты под маунтом", "локоть–колено"],
     back: ["Ты на спине бота", "души", "Бот на твоей спине", "сползай в гард"]
   };

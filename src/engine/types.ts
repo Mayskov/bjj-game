@@ -14,6 +14,8 @@ export type TransitionId =
   | "guardSweep"
   | "passGuard"
   | "halfSweep"
+  | "halfBackTop"
+  | "halfBackBottom"
   | "recoverGuard"
   | "mountUp"
   | "recoverHalf"

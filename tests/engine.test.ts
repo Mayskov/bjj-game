@@ -73,7 +73,7 @@ describe("переходы", () => {
     expect(f(n, "player").grips).toBe(0);
   });
 
-  it("свип из гарда — нижний становится верхним в полугарде, +2", () => {
+  it("свип из гарда — нижний становится верхним в халф гарде, +2", () => {
     const s = withState({ position: "guard", top: "bot", player: { grips: 2 } });
     const n = resolveExchange(s, "guardSweep", "breathe").nextState;
     expect(n.position).toBe("halfGuard");
@@ -81,7 +81,7 @@ describe("переходы", () => {
     expect(f(n, "player").score).toBe(2);
   });
 
-  it("свип из полугарда меняет верхнего", () => {
+  it("свип из халф гарда меняет верхнего", () => {
     const s = withState({ position: "halfGuard", top: "player", bot: { grips: 2 } });
     const n = resolveExchange(s, "breathe", "halfSweep").nextState;
     expect(n.position).toBe("halfGuard");
@@ -99,6 +99,18 @@ describe("переходы", () => {
     s = { ...s, fighters: { ...s.fighters, player: { ...f(s, "player"), grips: 2 } } };
     s = resolveExchange(s, "takeBack", "breathe").nextState;
     expect([s.position, s.top, f(s, "player").score]).toEqual(["back", "player", 11]);
+  });
+
+  it("забрать спину из халф гарда — и сверху, и снизу, +4, нужно 3 захвата", () => {
+    const top = withState({ position: "halfGuard", top: "player", player: { grips: 3 } });
+    expect(legalActions(top, "player")).toContain("halfBackTop");
+    let n = resolveExchange(top, "halfBackTop", "breathe").nextState;
+    expect([n.position, n.top, f(n, "player").score]).toEqual(["back", "player", 4]);
+    const bottom = withState({ position: "halfGuard", top: "bot", player: { grips: 3 } });
+    expect(legalActions(bottom, "player")).toContain("halfBackBottom");
+    n = resolveExchange(bottom, "halfBackBottom", "breathe").nextState;
+    expect([n.position, n.top, f(n, "player").score]).toEqual(["back", "player", 4]);
+    expect(legalActions(withState({ position: "halfGuard", top: "player", player: { grips: 2 } }), "player")).not.toContain("halfBackTop");
   });
 
   it("выходы снизу: сползти в гард из спины — защищающийся снизу в гарде", () => {

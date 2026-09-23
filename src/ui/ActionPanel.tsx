@@ -1,6 +1,6 @@
-import { BASIC_ACTIONS, BASIC_ORDER, DUEL_ACTIONS, SUBMISSIONS, TRANSITIONS, SUBMISSION_GRIP_COST, categoryOf } from "../engine/catalog";
+import { BASIC_ACTIONS, BASIC_ORDER, DUEL_ACTIONS, MAX_BREATH, SUBMISSIONS, TRANSITIONS, SUBMISSION_GRIP_COST, categoryOf } from "../engine/catalog";
 import { ActionIcon } from "./icons";
-import { canAfford, techniquesFor } from "../engine/rules";
+import { canAfford, legalActions, techniquesFor } from "../engine/rules";
 import type { ActionId, DuelActionId, MatchState, SubmissionId, TransitionId } from "../engine/types";
 
 interface Props {
@@ -31,8 +31,17 @@ function specs(m: MatchState): ButtonSpec[] {
     };
     return ids.map((id) => ({ id, title: DUEL_ACTIONS[id].name, sub: sub[id], kind: id, disabled: false }));
   }
+  // Базовое действие серое, если оно сейчас ничего не даёт: рамка без угрозы перехода,
+  // защита шеи без угрозы сабмишна, отдых при полном дыхании. Захват доступен всегда.
+  const foeMoves = legalActions(m, "bot").map(categoryOf);
+  const idle: Record<string, string | null> = {
+    grip: null,
+    frame: foeMoves.includes("transition") ? null : "нет угрозы перехода",
+    neck: foeMoves.includes("submission") ? null : "нет угрозы сабмишна",
+    breathe: me.breath < MAX_BREATH ? null : "дыхание полное"
+  };
   const SHORT: Record<string, string> = { grip: "+1 захв. · +1 дых.", frame: "блок перехода", neck: "блок сабмишна", breathe: "+2 дыхания" };
-  const list: ButtonSpec[] = BASIC_ORDER.map((id) => ({ id, title: BASIC_ACTIONS[id].name, sub: SHORT[id], kind: id, disabled: false }));
+  const list: ButtonSpec[] = BASIC_ORDER.map((id) => ({ id, title: BASIC_ACTIONS[id].name, sub: idle[id] ?? SHORT[id], kind: id, disabled: idle[id] !== null }));
   for (const id of techniquesFor(m, "player")) {
     const affordable = canAfford(me, id);
     if (categoryOf(id) === "transition") {

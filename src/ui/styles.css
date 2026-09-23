@@ -554,11 +554,11 @@ button {
   color: var(--ink-2);
 }
 
-/* ---------- Кнопки: равнозначные, цвет = тип действия ---------- */
+/* ---------- Кнопки: два состояния — зелёная (можно) и серая (нельзя / бесполезно) ---------- */
 .actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
 }
 
 .actions-over {
@@ -566,21 +566,18 @@ button {
 }
 
 .act {
-  --c1: #888;
-  --c2: #666;
   position: relative;
-  min-height: 56px;
+  min-height: 52px;
   padding: 8px 12px;
   border: 0;
-  border-radius: var(--radius);
-  background: linear-gradient(180deg, var(--c1), var(--c2));
+  border-radius: 14px;
+  background: var(--good);
   color: #fff;
   text-align: left;
   display: flex;
   align-items: center;
-  gap: 8px;
-  box-shadow: 0 6px 14px color-mix(in srgb, var(--c2) 35%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-  transition: transform 0.08s, box-shadow 0.08s, opacity 0.15s;
+  gap: 10px;
+  transition: transform 0.08s, background 0.15s, opacity 0.15s;
 }
 
 .act:active:not(:disabled) {
@@ -589,6 +586,9 @@ button {
 
 .act-icon {
   flex: none;
+  width: 20px;
+  height: 20px;
+  opacity: 0.9;
 }
 
 .act-text {
@@ -599,8 +599,8 @@ button {
 }
 
 .act-title {
-  font-size: 0.97rem;
-  font-weight: 750;
+  font-size: 0.95rem;
+  font-weight: 700;
   line-height: 1.15;
 }
 
@@ -608,18 +608,13 @@ button {
   font-size: 0.72rem;
   font-weight: 500;
   line-height: 1.2;
-  opacity: 0.9;
+  opacity: 0.85;
 }
 
-/* Техника недоступна по ресурсам — белая карточка, как вторичные кнопки макета. */
+/* Недоступно по ресурсам или сейчас бесполезно. */
 .act.locked {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(20, 33, 58, 0.07);
   color: var(--ink-3);
-  box-shadow: 0 3px 10px rgba(40, 80, 140, 0.1);
-}
-
-.act.locked .act-title {
-  color: var(--ink-2);
 }
 
 /* Идёт обмен — ввод заблокирован. */
@@ -628,60 +623,12 @@ button {
   cursor: default;
 }
 
-.act-grip {
-  --c1: #ffb13d;
-  --c2: #f08a0c;
-}
-
-.act-frame {
-  --c1: #3f8cff;
-  --c2: #1f6ff2;
-}
-
-.act-neck {
-  --c1: #22c28c;
-  --c2: #11a070;
-}
-
-.act-breathe {
-  --c1: #3fc6ee;
-  --c2: #1aa2d1;
-}
-
-.act-transition {
-  --c1: #ff6b5c;
-  --c2: #ea4335;
-}
-
-.act-submission,
-.act-finish {
-  --c1: #9b6bff;
-  --c2: #7442d6;
-}
-
-.act-switch {
-  --c1: #f36dc2;
-  --c2: #d8409f;
-}
-
-.act-defendGrip {
-  --c1: #22c28c;
-  --c2: #11a070;
-}
-
-.act-turn {
-  --c1: #3f8cff;
-  --c2: #1f6ff2;
-}
-
 .act-rematch {
-  --c1: #3f8cff;
-  --c2: #1f6ff2;
   justify-content: center;
 }
 
 .actions-duel .act {
-  min-height: 64px;
+  min-height: 60px;
 }
 
 .history-link {

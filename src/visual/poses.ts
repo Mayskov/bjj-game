@@ -122,7 +122,7 @@ const guardBase: PoseDef = {
 
 const halfBase: PoseDef = {
   id: "halfGuard",
-  label: "Полугард",
+  label: "Халф гард",
   left: "B",
   A: {
     hip: [232, 184],
@@ -358,17 +358,29 @@ const guardSweepTry = derive(guardBase, "try.guardSweep", "Свип из гар�
   order: o("A.fl", "A.fa", "B.fa", "B.fl", "B.t", "B.h", "A.t", "A.h", "A.nl", "B.nl", "A.na", "B.na")
 });
 
-// ---------------------------------------------------------------- Полугард
+// ---------------------------------------------------------------- Халф гард
 const passGuardTry = derive(halfBase, "try.passGuard", "Пройти гард — попытка", {
   A: { hip: [232, 176], torso: -152, neck: -164, nf: [250, 212], bnf: 1, ff: [298, 224], nh: [152, 210], fh: [172, 200] },
   B: { nh: [196, 184], fh: [190, 180], nf: [254, 210], ff: [262, 222] },
   order: o("A.fl", "A.fa", "B.fa", "B.fl", "B.t", "B.h", "B.nl", "A.t", "A.h", "A.nl", "A.na", "B.na")
 });
 
-const halfSweepTry = derive(halfBase, "try.halfSweep", "Свип из полугарда — попытка", {
+const halfSweepTry = derive(halfBase, "try.halfSweep", "Свип из халф гарда — попытка", {
   A: { hip: [242, 178], torso: 214, neck: 222, nh: [176, 222], fh: [292, 196], nf: [282, 194], ff: [306, 224], bfh: -1 },
   B: { hip: [214, 210], torso: 200, neck: 206, nh: [240, 176], fh: [168, 224], nf: [262, 190], ff: [256, 224], bnh: -1 },
   order: o("A.fl", "A.fa", "B.fa", "B.fl", "A.t", "A.h", "B.t", "B.h", "A.nl", "B.nl", "A.na", "B.na")
+});
+
+const halfBackTopTry = derive(halfBase, "try.halfBackTop", "Забрать спину из халф гарда (сверху) — попытка", {
+  A: { hip: [214, 176], torso: -118, neck: -130, nh: [176, 214], fh: [196, 200], nf: [250, 214], ff: [286, 222] },
+  B: { torso: 190, neck: 204, nh: [200, 206], fh: [186, 200], nf: [258, 206], ff: [270, 218] },
+  order: o("B.fa", "B.fl", "B.t", "B.h", "B.nl", "A.fl", "A.fa", "A.t", "A.h", "A.nl", "A.na", "B.na")
+});
+
+const halfBackBottomTry = derive(halfBase, "try.halfBackBottom", "Забрать спину из халф гарда (снизу) — попытка", {
+  A: { hip: [238, 180], torso: 206, neck: 214, nh: [150, 218], fh: [170, 214] },
+  B: { hip: [206, 204], torso: -150, neck: -140, nh: [262, 170], fh: [244, 176], nf: [252, 212], ff: [236, 222] },
+  order: o("A.fl", "A.fa", "B.fl", "B.fa", "A.t", "A.h", "A.nl", "B.t", "B.h", "B.nl", "A.na", "B.na")
 });
 
 const recoverGuardTry = derive(halfBase, "try.recoverGuard", "Вернуть гард — попытка", {
@@ -383,7 +395,7 @@ const mountUpTry = derive(sideBase, "try.mountUp", "Занять маунт — 
   B: { nh: [212, 206], fh: [170, 186] }
 });
 
-const recoverHalfTry = derive(sideBase, "try.recoverHalf", "Вернуть полугард — попытка", {
+const recoverHalfTry = derive(sideBase, "try.recoverHalf", "Вернуть халф гард — попытка", {
   A: { hip: [214, 186] },
   B: { hip: [226, 212], torso: 186, nf: [238, 176], bnf: -1, nh: [214, 192], fh: [176, 180] },
   order: o("B.fa", "B.fl", "A.fl", "A.fa", "B.t", "B.h", "A.t", "A.h", "A.nl", "B.nl", "A.na", "B.na")
@@ -681,6 +693,8 @@ register(
   guardSweepTry,
   passGuardTry,
   halfSweepTry,
+  halfBackTopTry,
+  halfBackBottomTry,
   recoverGuardTry,
   mountUpTry,
   recoverHalfTry,
